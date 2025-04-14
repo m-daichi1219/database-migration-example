@@ -35,7 +35,7 @@ sudo service docker start
 ### 3. Docker コンテナのビルドと起動
 
 ```bash
-cd docker
+cd db-sample-project/docker
 chmod +x init-db.sh
 docker-compose up -d --build
 ```

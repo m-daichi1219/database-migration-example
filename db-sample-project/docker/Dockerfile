@@ -1,15 +1,19 @@
-FROM postgres:14
+FROM postgres:15
 
 # 必要なパッケージのインストール
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    openjdk-17-jdk \
     curl \
     unzip \
     postgresql-contrib \
     make \
     gcc \
     libpq-dev \
-    postgresql-server-dev-14 \
+    postgresql-server-dev-15 \
     git \
+    patch \
+    perl \
+    cpanminus \
     && rm -rf /var/lib/apt/lists/*
 
 # PgTapのインストール
@@ -19,6 +23,8 @@ RUN git clone https://github.com/theory/pgtap.git \
     && make install \
     && cd .. \
     && rm -rf pgtap
+
+RUN cpanm TAP::Parser::SourceHandler::pgTAP
 
 # Flywayのインストール
 ENV FLYWAY_VERSION=9.8.1
